@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Invoice - Shreeji Consultancy Services</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 40px;
+      background: #fff;
+      color: #000;
+    }
+    .invoice-container {
+      max-width: 800px;
+      margin: auto;
+      border: 1px solid #ddd;
+      padding: 30px;
+    }
+    .header, .footer, .signature {
+      text-align: center;
+    }
+    .company-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #000;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+    .company-info img {
+      height: 50px;
+    }
+    .details {
+      margin-bottom: 20px;
+    }
+    .details input {
+      border: none;
+      border-bottom: 1px solid #000;
+      width: 100%;
+      font-size: 16px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    table, th, td {
+      border: 1px solid #000;
+    }
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+    .totals {
+      text-align: right;
+      margin-top: 10px;
+    }
+    .totals div {
+      margin: 5px 0;
+    }
+    .footer {
+      font-size: 14px;
+      border-top: 1px solid #000;
+      padding-top: 10px;
+    }
+    .btn {
+      margin: 10px 0;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="invoice-container" id="invoice">
+    <div class="company-info">
+      <div>
+        <img src="logo.png" alt="Logo" />
+        <h2>SHREEJI CONSULTANCY SERVICES</h2>
+      </div>
+      <h1>INVOICE</h1>
+    </div>
+
+    <div class="details">
+      <p>INVOICE TO:<br>
+        <input type="text" placeholder="Customer Name" id="customerName"><br>
+        <input type="text" placeholder="Customer Address" id="customerAddress">
+      </p>
+      <p style="text-align:right">
+        Invoice No: <input type="text" id="invoiceNo" value="#1234"><br>
+        Invoice Date: <input type="text" id="invoiceDate" value="June 21, 2025">
+      </p>
+    </div>
+
+    <table id="itemsTable">
+      <thead>
+        <tr>
+          <th>NAME</th><th>QTY</th><th>PRICE</th><th>TOTAL</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="text" value="Item Name"></td>
+          <td><input type="number" value="1" oninput="calculateTotals()"></td>
+          <td><input type="number" value="0" oninput="calculateTotals()"></td>
+          <td class="row-total">$0</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button class="btn" onclick="addRow()">+ Add Item</button>
+
+    <div class="totals">
+      <div>Sub-total: $<span id="subtotal">0</span></div>
+      <div>Tax: $<input type="number" id="tax" value="0" oninput="calculateTotals()"></div>
+      <div><strong>Total: $<span id="total">0</span></strong></div>
+    </div>
+
+    <div class="signature">
+      <p>__________________________<br><strong>Bhavna Raja</strong><br>Administrator</p>
+    </div>
+
+    <div class="footer">
+      <p><strong>Contact No.</strong> +91 7738921280 &nbsp;&nbsp;|&nbsp;&nbsp; <strong>Email id:</strong> atulraja1966@gmail.com &nbsp;&nbsp;|&nbsp;&nbsp; <strong>Address:</strong> Bhayli, Vadodara - 391410</p>
+    </div>
+  </div>
+
+  <button class="btn" onclick="downloadPDF()">Generate PDF</button>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+  <script>
+    function addRow() {
+      const table = document.getElementById("itemsTable").getElementsByTagName('tbody')[0];
+      const row = table.insertRow();
+      row.innerHTML = `
+        <td><input type="text" value="Item Name"></td>
+        <td><input type="number" value="1" oninput="calculateTotals()"></td>
+        <td><input type="number" value="0" oninput="calculateTotals()"></td>
+        <td class="row-total">$0</td>
+      `;
+    }
+
+    function calculateTotals() {
+      let subtotal = 0;
+      const rows = document.querySelectorAll("#itemsTable tbody tr");
+      rows.forEach(row => {
+        const qty = parseFloat(row.cells[1].children[0].value) || 0;
+        const price = parseFloat(row.cells[2].children[0].value) || 0;
+        const total = qty * price;
+        row.cells[3].innerText = `$${total}`;
+        subtotal += total;
+      });
+      document.getElementById("subtotal").innerText = subtotal;
+      const tax = parseFloat(document.getElementById("tax").value) || 0;
+      document.getElementById("total").innerText = subtotal + tax;
+    }
+
+    function downloadPDF() {
+      const element = document.getElementById("invoice");
+      html2pdf().from(element).save("Invoice_SCS.pdf");
+    }
+  </script>
+</body>
+</html>
