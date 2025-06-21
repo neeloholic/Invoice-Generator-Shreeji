@@ -96,8 +96,9 @@
     <table id="itemsTable">
       <thead>
         <tr>
-          <th>NAME</th><th>QTY</th><th>PRICE</th><th>TOTAL</th>
+          <th>NAME</th><th>QTY</th><th>PRICE</th><th>TOTAL</th><th>ACTION</th>
         </tr>
+
       </thead>
       <tbody>
         <tr>
@@ -138,8 +139,17 @@
         <td><input type="number" value="1" oninput="calculateTotals()"></td>
         <td><input type="number" value="0" oninput="calculateTotals()"></td>
         <td class="row-total">$0</td>
+        <td><button onclick="removeRow(this)">Remove</button></td>
       `;
+
     }
+
+    function removeRow(button) {
+      const row = button.closest('tr');
+      row.remove();
+      calculateTotals();
+    }
+
 
     function calculateTotals() {
       let subtotal = 0;
