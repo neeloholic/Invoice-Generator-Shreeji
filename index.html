@@ -113,6 +113,13 @@
       margin-left: 0;
       margin-top: 50px;
     }
+
+    @media print {
+      .no-print {
+        display: none;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -151,7 +158,8 @@
       </tbody>
     </table>
 
-    <button class="btn" onclick="addRow()">+ Add Item</button>
+    <button class="btn no-print" onclick="addRow()">+ Add Item</button>
+
 
     <div class="totals">
       <div>Sub-total: ₹<span id="subtotal">0</span></div>
