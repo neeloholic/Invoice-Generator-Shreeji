@@ -158,7 +158,7 @@
       </tbody>
     </table>
 
-    <button class="btn no-print" onclick="addRow()">+ Add Item</button>
+    
 
 
     <div class="totals">
@@ -166,6 +166,9 @@
       <div>Tax: ₹<input type="number" id="tax" value="0" oninput="calculateTotals()"></div>
       <div><strong>Total: ₹<span id="total">0</span></strong></div>
     </div>
+
+    <button class="btn no-print" onclick="addRow()">+ Add Item</button>
+    <button class="btn no-print" onclick="downloadPDF()">Generate PDF</button>
 
     <div class="signature">
       <p>__________________________<br><strong>Bhavna Raja</strong><br><p class="admin">Director</p></p>
