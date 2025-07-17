@@ -65,6 +65,9 @@
       border-bottom: 1px solid #000;
       padding-bottom: 5px;
     }
+    table th:last-child {
+      text-align: right;
+    }
     table td {
       border: none;
       border-bottom: 1px solid #ccc;
@@ -73,11 +76,13 @@
     table td input[type="text"] {
       width: 100%;
       border: none;
+      border-bottom: 1px solid #000;
       font-size: 16px;
     }
     table td input[type="number"] {
       width: 100%;
       border: none;
+      border-bottom: 1px solid #000;
       font-size: 16px;
       text-align: right;
     }
@@ -134,7 +139,7 @@
       <thead>
         <tr>
           <th>Description</th>
-          <th>Price</th>
+          <th style="text-align:right">Price</th>
         </tr>
       </thead>
       <tbody>
