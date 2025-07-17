@@ -168,7 +168,7 @@
     </div>
 
     <button class="btn no-print" onclick="addRow()">+ Add Item</button>
-    <button class="btn no-print" onclick="downloadPDF()">Generate PDF</button>
+    
 
     <div class="signature">
       <p>__________________________<br><strong>Bhavna Raja</strong><br><p class="admin">Director</p></p>
@@ -206,9 +206,21 @@
     }
 
     function downloadPDF() {
+  // Hide elements marked with 'no-print'
+      const noPrintElems = document.querySelectorAll('.no-print');
+      noPrintElems.forEach(elem => elem.style.display = 'none');
+
       const element = document.getElementById("invoice");
-      html2pdf().from(element).save("Invoice_SCS.pdf");
-    }
+
+      html2pdf()
+        .from(element)
+        .save("Invoice_SCS.pdf")
+        .then(() => {
+      // Restore elements after PDF generation
+      noPrintElems.forEach(elem => elem.style.display = '');
+    });
+}
+
   </script>
 </body>
 </html>
