@@ -65,7 +65,7 @@
     }
     th, td {
       padding: 10px;
-      text-align: center;
+      text-align: left;
     }
     .totals {
       text-align: right;
@@ -93,7 +93,6 @@
       margin-left: 0;
       margin-top: 50px;
     }
-    
   </style>
 </head>
 <body>
@@ -120,16 +119,14 @@
     <table id="itemsTable">
       <thead>
         <tr>
-          <th>NAME</th><th>QTY</th><th>PRICE</th><th>TOTAL</th><th>ACTION</th>
+          <th>Description</th>
+          <th>Price</th>
         </tr>
-
       </thead>
       <tbody>
         <tr>
-          <td><input type="text" value="Item Name"></td>
-          <td><input type="number" value="1" oninput="calculateTotals()"></td>
+          <td><input type="text" value="Item Description"></td>
           <td><input type="number" value="0" oninput="calculateTotals()"></td>
-          <td class="row-total">₹0</td>
         </tr>
       </tbody>
     </table>
@@ -159,31 +156,17 @@
       const table = document.getElementById("itemsTable").getElementsByTagName('tbody')[0];
       const row = table.insertRow();
       row.innerHTML = `
-        <td><input type="text" value="Item Name"></td>
-        <td><input type="number" value="1" oninput="calculateTotals()"></td>
+        <td><input type="text" value="Item Description"></td>
         <td><input type="number" value="0" oninput="calculateTotals()"></td>
-        <td class="row-total">$0</td>
-        <td><button onclick="removeRow(this)">Remove</button></td>
       `;
-
     }
-
-    function removeRow(button) {
-      const row = button.closest('tr');
-      row.remove();
-      calculateTotals();
-    }
-
 
     function calculateTotals() {
       let subtotal = 0;
       const rows = document.querySelectorAll("#itemsTable tbody tr");
       rows.forEach(row => {
-        const qty = parseFloat(row.cells[1].children[0].value) || 0;
-        const price = parseFloat(row.cells[2].children[0].value) || 0;
-        const total = qty * price;
-        row.cells[3].innerText = `$${total}`;
-        subtotal += total;
+        const price = parseFloat(row.cells[1].children[0].value) || 0;
+        subtotal += price;
       });
       document.getElementById("subtotal").innerText = subtotal;
       const tax = parseFloat(document.getElementById("tax").value) || 0;
